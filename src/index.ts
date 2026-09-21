@@ -105,7 +105,7 @@ export default class TestPlugin{
       setInterval(async()=>{
         const response=await fetch("http://localhost:3456/update");
         const text=await response.text();
-        if (response.status!=400){
+        if (response.status!=400 && text!="n"){
           console.log(response);
           app.innerHTML=text;
         }
