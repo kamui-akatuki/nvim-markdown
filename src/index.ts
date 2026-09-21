@@ -110,7 +110,7 @@ export default class TestPlugin{
           app.innerHTML=text;
         }
         if (text.includes("n")){
-          console.log([text]);
+          console.log(response.status);
         }
       },100);
     </script>
