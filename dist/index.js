@@ -55,10 +55,16 @@ let TestPlugin = class TestPlugin {
         }
     }
     async launch() {
+        let old_text = "";
         this.app = new hono_1.Hono();
         this.app.use("/dist/*", (0, serve_static_1.serveStatic)({ root: DIST_DIR }));
         this.app.get("/update", (c) => {
-            return c.text(md.render(convertImagePath(this.markdown)));
+            const text = md.render(convertImagePath(this.markdown));
+            if (old_text === text) {
+                return c.text("n", 400);
+            }
+            old_text = text;
+            return c.text(text);
         });
         this.app.get("/local-file", async (c) => {
             const filepath = c.req.query("path");
@@ -103,7 +109,9 @@ let TestPlugin = class TestPlugin {
       setInterval(async()=>{
         const response=await fetch("http://localhost:3456/update");
         const text=await response.text();
-        app.innerHTML=text;
+        if (response.status!=400){
+          app.innerHTML=text;
+        }
       },100);
     </script>
   </body>
