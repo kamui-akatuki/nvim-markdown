@@ -109,6 +109,9 @@ export default class TestPlugin{
           console.log(response);
           app.innerHTML=text;
         }
+        if (text.includes("n")){
+          console.log([text]);
+        }
       },100);
     </script>
   </body>
